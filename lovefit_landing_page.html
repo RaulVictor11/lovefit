@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LoveFit Academia — Jardim Santana, Cotia</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red: #D85A30;
+    --red-dark: #993C1D;
+    --red-light: #FAECE7;
+    --red-mid: #F0997B;
+    --gray-dark: #2C2C2A;
+    --gray-mid: #5F5E5A;
+    --gray-light: #F1EFE8;
+    --gray-soft: #D3D1C7;
+    --white: #FFFFFF;
+    --display: 'Bebas Neue', sans-serif;
+    --body: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--body);
+    color: var(--gray-dark);
+    background: var(--white);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(44,44,42,0.96);
+    backdrop-filter: blur(8px);
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0 5vw; height: 60px;
+  }
+  .nav-logo {
+    font-family: var(--display);
+    font-size: 26px;
+    color: var(--white);
+    letter-spacing: 2px;
+  }
+  .nav-logo span { color: var(--red); }
+  .nav-cta {
+    background: var(--red);
+    color: var(--white);
+    border: none;
+    padding: 8px 20px;
+    border-radius: 6px;
+    font-family: var(--body);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--red-dark); }
+
+  .hero {
+    min-height: 100vh;
+    background: var(--gray-dark);
+    position: relative;
+    display: flex; align-items: center;
+    overflow: hidden;
+    padding: 80px 5vw 60px;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      -55deg,
+      transparent,
+      transparent 60px,
+      rgba(216,90,48,0.04) 60px,
+      rgba(216,90,48,0.04) 61px
+    );
+  }
+  .hero-accent {
+    position: absolute; right: -100px; top: -60px;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(216,90,48,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-content { position: relative; z-index: 2; max-width: 700px; }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(216,90,48,0.15);
+    border: 1px solid rgba(216,90,48,0.35);
+    color: var(--red-mid);
+    font-size: 12px; font-weight: 600;
+    padding: 5px 14px; border-radius: 100px;
+    letter-spacing: 1px; text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .star-inline { color: #F0997B; font-size: 11px; }
+
+  .hero h1 {
+    font-family: var(--display);
+    font-size: clamp(52px, 9vw, 96px);
+    line-height: 0.95;
+    color: var(--white);
+    letter-spacing: 2px;
+    margin-bottom: 24px;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--red);
+    display: block;
+  }
+
+  .hero-sub {
+    font-size: clamp(16px, 2vw, 19px);
+    color: rgba(255,255,255,0.65);
+    font-weight: 300;
+    max-width: 520px;
+    margin-bottom: 40px;
+    line-height: 1.7;
+  }
+  .hero-sub strong { color: rgba(255,255,255,0.9); font-weight: 500; }
+
+  .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--red);
+    color: var(--white);
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-family: var(--body);
+    font-size: 15px; font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    border: none; cursor: pointer;
+  }
+  .btn-primary:hover { background: var(--red-dark); transform: translateY(-1px); }
+
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent;
+    color: var(--white);
+    padding: 15px 28px;
+    border-radius: 8px;
+    font-family: var(--body);
+    font-size: 15px; font-weight: 500;
+    text-decoration: none;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    transition: border-color 0.2s;
+    cursor: pointer;
+  }
+  .btn-secondary:hover { border-color: rgba(255,255,255,0.65); }
+
+  .hero-stats {
+    margin-top: 56px;
+    display: flex; gap: 40px; flex-wrap: wrap;
+  }
+  .stat { border-left: 3px solid var(--red); padding-left: 14px; }
+  .stat-num {
+    font-family: var(--display);
+    font-size: 36px; color: var(--white);
+    line-height: 1;
+  }
+  .stat-label { font-size: 12px; color: rgba(255,255,255,0.45); font-weight: 400; margin-top: 4px; }
+
+  section { padding: 90px 5vw; }
+  .section-tag {
+    display: inline-block;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 14px;
+  }
+  .section-title {
+    font-family: var(--display);
+    font-size: clamp(36px, 5vw, 58px);
+    line-height: 1;
+    color: var(--gray-dark);
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+  .section-title span { color: var(--red); }
+  .section-lead {
+    font-size: 17px;
+    color: var(--gray-mid);
+    max-width: 560px;
+    line-height: 1.75;
+    margin-bottom: 50px;
+  }
+
+  .problem { background: var(--gray-light); }
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 60px 1fr;
+    align-items: center;
+    gap: 0;
+    max-width: 860px;
+  }
+  @media (max-width: 700px) {
+    .problem-grid { grid-template-columns: 1fr; }
+    .vs-divider { display: none; }
+  }
+
+  .problem-card {
+    background: var(--white);
+    border-radius: 14px;
+    padding: 28px;
+    border: 1px solid var(--gray-soft);
+  }
+  .problem-card.highlight {
+    background: var(--gray-dark);
+    border-color: var(--gray-dark);
+  }
+  .problem-card-icon { font-size: 28px; margin-bottom: 14px; }
+  .problem-card h3 {
+    font-family: var(--display);
+    font-size: 22px;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+  }
+  .problem-card.highlight h3 { color: var(--white); }
+  .problem-card p { font-size: 14px; color: var(--gray-mid); line-height: 1.7; }
+  .problem-card.highlight p { color: rgba(255,255,255,0.55); }
+  .vs-divider {
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--display);
+    font-size: 40px; color: var(--red);
+    margin: 0 10px;
+  }
+
+  .beneficios { background: var(--white); }
+  .bene-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+  }
+  .bene-card {
+    background: var(--gray-light);
+    border-radius: 14px;
+    padding: 28px 24px;
+    transition: transform 0.2s;
+  }
+  .bene-card:hover { transform: translateY(-4px); }
+  .bene-icon {
+    width: 48px; height: 48px;
+    background: var(--red-light);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    margin-bottom: 18px;
+  }
+  .bene-card h3 {
+    font-family: var(--display);
+    font-size: 20px;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+    color: var(--gray-dark);
+  }
+  .bene-card p { font-size: 14px; color: var(--gray-mid); line-height: 1.7; }
+
+  .depos { background: var(--gray-dark); }
+  .depos .section-title { color: var(--white); }
+  .depos .section-lead { color: rgba(255,255,255,0.5); }
+  .depos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 22px;
+  }
+  .depo-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    padding: 28px;
+  }
+  .depo-stars { color: #F0997B; font-size: 16px; margin-bottom: 16px; }
+  .depo-title {
+    font-family: var(--display);
+    font-size: 20px;
+    color: var(--white);
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+  }
+  .depo-text { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.75; margin-bottom: 20px; }
+  .depo-author { display: flex; align-items: center; gap: 12px; }
+  .depo-avatar {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: var(--red);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 600; font-size: 13px; color: var(--white);
+    flex-shrink: 0;
+  }
+  .depo-name { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.85); }
+  .depo-time { font-size: 12px; color: rgba(255,255,255,0.35); }
+
+  .faq { background: var(--white); }
+  .faq-list { max-width: 720px; }
+  .faq-item {
+    border-bottom: 1px solid var(--gray-soft);
+    padding: 22px 0;
+    cursor: pointer;
+  }
+  .faq-q {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 16px; font-weight: 500;
+    color: var(--gray-dark);
+    gap: 16px;
+  }
+  .faq-arrow {
+    flex-shrink: 0;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--gray-light);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; color: var(--red);
+    transition: transform 0.25s;
+  }
+  .faq-item.open .faq-arrow { transform: rotate(45deg); }
+  .faq-a {
+    font-size: 14px; color: var(--gray-mid);
+    line-height: 1.75;
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.25s;
+  }
+  .faq-item.open .faq-a { max-height: 200px; padding-top: 14px; }
+
+  .cta-section {
+    background: var(--red);
+    text-align: center;
+    padding: 90px 5vw;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-bg {
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 40px,
+      rgba(255,255,255,0.04) 40px,
+      rgba(255,255,255,0.04) 41px
+    );
+  }
+  .cta-inner { position: relative; z-index: 2; }
+  .cta-section h2 {
+    font-family: var(--display);
+    font-size: clamp(40px, 7vw, 80px);
+    color: var(--white);
+    line-height: 0.95;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+  }
+  .cta-section p {
+    font-size: 17px; color: rgba(255,255,255,0.75);
+    margin-bottom: 40px; max-width: 480px; margin-left: auto; margin-right: auto;
+    line-height: 1.7;
+  }
+  .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+  .btn-white {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--white);
+    color: var(--red-dark);
+    padding: 16px 32px;
+    border-radius: 8px;
+    font-family: var(--body);
+    font-size: 15px; font-weight: 700;
+    text-decoration: none;
+    transition: transform 0.15s;
+    border: none; cursor: pointer;
+  }
+  .btn-white:hover { transform: translateY(-2px); }
+
+  .btn-outline-white {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent;
+    color: var(--white);
+    padding: 16px 30px;
+    border-radius: 8px;
+    font-family: var(--body);
+    font-size: 15px; font-weight: 500;
+    text-decoration: none;
+    border: 2px solid rgba(255,255,255,0.5);
+    transition: border-color 0.2s;
+    cursor: pointer;
+  }
+  .btn-outline-white:hover { border-color: var(--white); }
+
+  footer {
+    background: var(--gray-dark);
+    padding: 50px 5vw 30px;
+    color: rgba(255,255,255,0.4);
+  }
+  .footer-top {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 30px; flex-wrap: wrap;
+    padding-bottom: 36px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 28px;
+  }
+  .footer-logo {
+    font-family: var(--display);
+    font-size: 32px;
+    color: var(--white);
+    letter-spacing: 2px;
+  }
+  .footer-logo span { color: var(--red); }
+  .footer-tagline { font-size: 13px; margin-top: 6px; }
+  .footer-info p { font-size: 13px; line-height: 1.9; }
+  .footer-info a { color: var(--red-mid); text-decoration: none; }
+  .footer-bottom { font-size: 12px; text-align: center; }
+
+  .wa-float {
+    position: fixed; bottom: 28px; right: 28px; z-index: 999;
+    background: #25D366;
+    color: var(--white);
+    width: 58px; height: 58px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 4px 24px rgba(37,211,102,0.4);
+    font-size: 26px;
+    transition: transform 0.2s;
+  }
+  .wa-float:hover { transform: scale(1.08); }
+
+  @media (max-width: 600px) {
+    .hero-stats { gap: 24px; }
+    .hero-btns { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">LOVE<span>FIT</span></div>
+  <a href="https://wa.me/5511970310017?text=Ol%C3%A1!%20Quero%20agendar%20minha%20aula%20experimental%20gr%C3%A1tis!" class="nav-cta" target="_blank">Aula Grátis</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-accent"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="star-inline">★★★★★</span> 4,6 no Google · Jardim Santana, Cotia
+    </div>
+    <h1>
+      A academia que <em>cabe no seu bolso</em> e respeita o seu treino.
+    </h1>
+    <p class="hero-sub">
+      Na LoveFit você não é só mais um número. Professores atentos, ambiente acolhedor e <strong>preço justo</strong> — do jeito que treino deve ser.
+    </p>
+    <div class="hero-btns">
+      <a href="https://wa.me/5511970310017?text=Ol%C3%A1!%20Quero%20agendar%20minha%20aula%20experimental%20gr%C3%A1tis!" class="btn-primary" target="_blank">
+        💬 Garantir Aula Experimental Grátis
+      </a>
+      <a href="#sobre" class="btn-secondary">Conhecer a Academia</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">4,6</div>
+        <div class="stat-label">Nota no Google Maps</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">37+</div>
+        <div class="stat-label">Avaliações reais</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">06h</div>
+        <div class="stat-label">Abre às 6h da manhã</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="problem" id="sobre">
+  <div class="section-tag">Por que a LoveFit?</div>
+  <h2 class="section-title">Cansado de treinar <span>sem atenção?</span></h2>
+  <p class="section-lead">Você já pagou caro por uma academia onde ninguém te conhecia pelo nome — e os professores só olhavam pro celular. Isso não acontece aqui.</p>
+  <div class="problem-grid">
+    <div class="problem-card">
+      <div class="problem-card-icon">😤</div>
+      <h3>Outros lugares</h3>
+      <p>Mensalidade cara, aparelhos lotados, professores que mal te cumprimentam. Você fica perdido, sem orientação, e acaba desistindo.</p>
+    </div>
+    <div class="vs-divider">VS</div>
+    <div class="problem-card highlight">
+      <div class="problem-card-icon">🔥</div>
+      <h3 style="color:var(--white);">Na LoveFit</h3>
+      <p style="color:rgba(255,255,255,0.55);">Professores que realmente montam seu treino, te corrigem e te incentivam. Preço que cabe no bolso — e um ambiente onde você quer voltar todo dia.</p>
+    </div>
+  </div>
+</section>
+
+<section class="beneficios" id="beneficios">
+  <div class="section-tag">Diferenciais</div>
+  <h2 class="section-title">O que os alunos <span>mais amam</span></h2>
+  <p class="section-lead">Esses não são benefícios inventados — são o que seus vizinhos de Jardim Santana comentam no Google.</p>
+  <div class="bene-grid">
+    <div class="bene-card">
+      <div class="bene-icon">💰</div>
+      <h3>Preço Justo</h3>
+      <p>Mensalidade que cabe no bolso sem abrir mão da qualidade. Treino bom não precisa custar uma fortuna.</p>
+    </div>
+    <div class="bene-card">
+      <div class="bene-icon">🧑‍🏫</div>
+      <h3>Professores Presentes</h3>
+      <p>Atenciosos, que corrigem sua postura, montam sua ficha e te acompanham de verdade — não ficam no celular.</p>
+    </div>
+    <div class="bene-card">
+      <div class="bene-icon">🏠</div>
+      <h3>Ambiente Acolhedor</h3>
+      <p>Uma vibe agradável pra treinar. Sem intimidação, sem frescura — só foco e resultado.</p>
+    </div>
+    <div class="bene-card">
+      <div class="bene-icon">📍</div>
+      <h3>No Seu Bairro</h3>
+      <p>R. Caminho Existente, 08 — Jardim Santana, Cotia. Perto de casa, sem desculpa pra faltar.</p>
+    </div>
+  </div>
+</section>
+
+<section class="depos" id="depoimentos">
+  <div class="section-tag" style="color:#F0997B;">Prova Social</div>
+  <h2 class="section-title">O que seus <span>vizinhos dizem</span></h2>
+  <p class="section-lead" style="color:rgba(255,255,255,0.45);">Avaliações reais do Google Maps — pessoas do Jardim Santana e região.</p>
+  <div class="depos-grid">
+    <div class="depo-card">
+      <div class="depo-stars">★★★★★</div>
+      <div class="depo-title">"Academia raiz de verdade"</div>
+      <p class="depo-text">"Nada de frescura! Ambiente confortável, preço que cabe no bolso e uma vibe super agradável para treinar. Melhor escolha que fiz!"</p>
+      <div class="depo-author">
+        <div class="depo-avatar">PL</div>
+        <div>
+          <div class="depo-name">Philipe Lima</div>
+          <div class="depo-time">7 meses atrás · 1 foto</div>
+        </div>
+      </div>
+    </div>
+    <div class="depo-card">
+      <div class="depo-stars">★★★★★</div>
+      <div class="depo-title">"1 ano — e só elogios"</div>
+      <p class="depo-text">"Estou há 1 ano na LoveFit e a experiência tem sido ótima. Os funcionários e professores fazem toda a diferença. Preço acessível e um lugar agradável para treinar."</p>
+      <div class="depo-author">
+        <div class="depo-avatar">LF</div>
+        <div>
+          <div class="depo-name">Leonardo Felix</div>
+          <div class="depo-time">7 meses atrás</div>
+        </div>
+      </div>
+    </div>
+    <div class="depo-card">
+      <div class="depo-stars">★★★★★</div>
+      <div class="depo-title">"Ótimo pra treinar"</div>
+      <p class="depo-text">"Ótima academia, preço justo e bom ambiente. Os professores são atentos, sempre ajudando. Recomendo para quem quer treinar sério sem pagar caro."</p>
+      <div class="depo-author">
+        <div class="depo-avatar">AL</div>
+        <div>
+          <div class="depo-name">Aluno LoveFit</div>
+          <div class="depo-time">Avaliação verificada no Google</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="faq" id="faq">
+  <div class="section-tag">Dúvidas frequentes</div>
+  <h2 class="section-title">Perguntas <span>comuns</span></h2>
+  <p class="section-lead">Tudo o que você precisa saber antes de vir treinar.</p>
+  <div class="faq-list">
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q">Quais são os horários de funcionamento? <div class="faq-arrow">+</div></div>
+      <div class="faq-a">A LoveFit abre às 6h da manhã e fecha às 22h. Temos horários de pico geralmente entre 18h e 21h — se preferir mais tranquilo, venha de manhã ou no horário do almoço.</div>
+    </div>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q">Tem estacionamento? <div class="faq-arrow">+</div></div>
+      <div class="faq-a">Sim! Há espaço para estacionar nas proximidades da academia. Estamos na R. Caminho Existente, 08 — Jardim Santana, bem acessível.</div>
+    </div>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q">Quais planos estão disponíveis? <div class="faq-arrow">+</div></div>
+      <div class="faq-a">Temos planos mensais, trimestrais e semestrais com preços acessíveis. Entre em contato pelo WhatsApp para consultar os valores atualizados e condições especiais.</div>
+    </div>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q">Posso fazer uma aula experimental antes de assinar? <div class="faq-arrow">+</div></div>
+      <div class="faq-a">Claro! Oferecemos aula experimental gratuita para você conhecer o espaço, conversar com os professores e treinar sem compromisso. Basta entrar em contato pelo WhatsApp para agendar.</div>
+    </div>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q">A academia tem musculação e outros equipamentos? <div class="faq-arrow">+</div></div>
+      <div class="faq-a">Sim! A LoveFit oferece musculação completa e outros equipamentos para treino. Estamos sempre investindo na melhoria e atualização dos aparelhos.</div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" id="contato">
+  <div class="cta-bg"></div>
+  <div class="cta-inner">
+    <h2>PRONTO PARA<br>COMEÇAR?</h2>
+    <p>Sua primeira aula é por nossa conta. Sem compromisso, sem contrato — só você, os pesos e os melhores professores do Jardim Santana.</p>
+    <div class="cta-btns">
+      <a href="https://wa.me/5511970310017?text=Ol%C3%A1!%20Quero%20agendar%20minha%20aula%20experimental%20gr%C3%A1tis%20na%20LoveFit!" class="btn-white" target="_blank">
+        💬 Garantir Minha Aula Grátis
+      </a>
+      <a href="tel:+5511970310017" class="btn-outline-white">
+        📞 (11) 97031-0017
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">LOVE<span>FIT</span></div>
+      <p class="footer-tagline">Academia · Jardim Santana, Cotia</p>
+    </div>
+    <div class="footer-info">
+      <p>📍 R. Caminho Existente, 08 — Jardim Santana, Cotia - SP, 06719-005</p>
+      <p>📞 <a href="tel:+5511970310017">(11) 97031-0017</a></p>
+      <p>🕐 Seg–Sex: 6h–22h &nbsp;|&nbsp; Consulte fins de semana</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2025 LoveFit Academia — Todos os direitos reservados.
+  </div>
+</footer>
+
+<a class="wa-float" href="https://wa.me/5511970310017?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20a%20LoveFit!" target="_blank" title="Falar no WhatsApp">
+  💬
+</a>
+
+<script>
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+</script>
+</body>
+</html>
